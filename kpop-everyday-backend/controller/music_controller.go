@@ -2,6 +2,7 @@ package controller
 
 import (
 	"kpopeveryday/usecase"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,5 +18,9 @@ func NewMusicController(usecase usecase.MusicUsecase) MusicController {
 }
 
 func (p *MusicController) GetMusic(ctx *gin.Context) {
-
+	music, err := p.MusicUsecase.GetMusic()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+	}
+	ctx.JSON(http.StatusOK, music)
 }

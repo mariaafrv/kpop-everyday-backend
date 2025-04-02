@@ -3,6 +3,7 @@ package main
 import (
 	"kpopeveryday/controller"
 	"kpopeveryday/db"
+	"kpopeveryday/repository"
 	"kpopeveryday/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,8 @@ func main() {
 		panic(err)
 	}
 
-	MusicUsecase := usecase.NewMusicUsecase()
+	MusicRepository := repository.NewMusicRepository(dbConnection)
+	MusicUsecase := usecase.NewMusicUsecase(MusicRepository)
 	MusicController := controller.NewMusicController(MusicUsecase)
 
 	server.GET("/ping", func(ctx *gin.Context) {

@@ -1,14 +1,20 @@
 package usecase
 
-import "kpopeveryday/model"
+import (
+	"kpopeveryday/model"
+	"kpopeveryday/repository"
+)
 
 type MusicUsecase struct {
+	repository repository.MusicRepository
 }
 
-func NewMusicUsecase() MusicUsecase {
-	return MusicUsecase{}
+func NewMusicUsecase(repo repository.MusicRepository) MusicUsecase {
+	return MusicUsecase{
+		repository: repo,
+	}
 }
 
 func (pu *MusicUsecase) GetMusic() ([]model.Music, error) {
-	return []model.Music, nil
+	return pu.repository.GetMusic()
 }
